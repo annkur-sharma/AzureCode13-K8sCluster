@@ -38,3 +38,15 @@ module "module_acr" {
   source        = "../modules/07-azurerm_container_registry"
   var_child_acr = var.var_root_acr
 }
+
+module "module_sql_server" {
+  depends_on    = [module.module_resource_group]
+  source        = "../modules/08-azurerm_mssql_server"
+  var_child_sqlserver = var.var_root_sqlserver
+}
+
+module "module_sql_database" {
+  depends_on    = [module.module_resource_group, module.module_sql_server]
+  source        = "../modules/09-azurerm_mssql_database"
+  var_child_sql_database = var.var_root_sql_database
+}

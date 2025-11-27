@@ -7,7 +7,7 @@ variable "var_root_resource_group" {
   type = map(object(
     {
       resource_group_name = string
-      resource_location = string
+      resource_location   = string
     }
   ))
 }
@@ -15,7 +15,7 @@ variable "var_root_resource_group" {
 variable "var_root_vnet" {
   type = map(object(
     {
-      vnet_name                = string
+      vnet_name           = string
       address_space       = list(string)
       location            = string
       resource_group_name = string
@@ -24,25 +24,25 @@ variable "var_root_vnet" {
 }
 
 variable "var_root_subnet" {
-    type = map(object(
-        {
-            subnet_name = string
-            resource_group_name = string
-            address_prefixes       = list(string)
-            virtual_network_name = string
-            private_endpoint_network_policies = optional(string)
-        }
-    ))
+  type = map(object(
+    {
+      subnet_name                       = string
+      resource_group_name               = string
+      address_prefixes                  = list(string)
+      virtual_network_name              = string
+      private_endpoint_network_policies = optional(string)
+    }
+  ))
 }
 
 variable "var_root_public_ip" {
   type = map(object(
     {
-      public_ip_name = string
+      public_ip_name      = string
       resource_group_name = string
-      location = string
-      allocation_method = string
-      sku = string
+      location            = string
+      allocation_method   = string
+      sku                 = string
     }
   ))
 }
@@ -93,7 +93,7 @@ variable "var_root_kubernetes_cluster" {
 variable "var_root_application_gateway" {
   type = map(object(
     {
-      appgateway_name                = string
+      appgateway_name     = string
       resource_group_name = string
       location            = string
 
@@ -104,9 +104,9 @@ variable "var_root_application_gateway" {
       })
 
       gateway_ip_configuration = object({
-        name      = string
+        name              = string
         appgw_subnet_name = string
-        vnet_name = string
+        vnet_name         = string
 
       })
 
@@ -116,12 +116,12 @@ variable "var_root_application_gateway" {
       })
 
       frontend_ip_configuration = object({
-        name                 = string
+        name                          = string
         public_ip_address_app_gw_name = string
       })
 
       backend_address_pool = object({
-        name         = string
+        name = string
       })
 
       backend_http_settings = object({
@@ -167,12 +167,52 @@ variable "var_root_acr" {
 
       acr_role_assignment = object(
         {
-          principal_id_k8s_name                     = string
+          principal_id_k8s_name            = string
           role_definition_name             = string
           scope                            = string
           skip_service_principal_aad_check = bool
         }
       )
+    }
+  ))
+}
+
+variable "var_root_sqlserver" {
+  type = map(object(
+    {
+      name                          = string
+      resource_group_name           = string
+      location                      = string
+      version                       = string
+      minimum_tls_version           = string
+      public_network_access_enabled = bool
+
+      identity = object(
+        {
+          type = string
+        }
+      )
+
+      # For username and password
+      key_Vault_name                = string
+      key_Value_resource_group_name = string
+      key_sqlserver_username        = string
+      key_sqlserver_password        = string
+    }
+  ))
+}
+
+variable "var_root_sql_database" {
+  type = map(object(
+    {
+      name                = string
+      collation           = string
+      license_type        = string
+      max_size_gb         = number
+      sku_name            = string
+      enclave_type        = string
+      sql_server_name     = string
+      resource_group_name = string
     }
   ))
 }

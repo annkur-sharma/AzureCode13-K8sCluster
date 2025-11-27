@@ -1,4 +1,4 @@
-root_provider_subscription_id = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+root_provider_subscription_id = "b4461466-1e6b-4be2-bb70-1e96a72a41c8"
 
 var_root_resource_group = {
   rg_1 = {
@@ -153,5 +153,49 @@ var_root_acr = {
       scope                            = "rg1k8sacr"
       skip_service_principal_aad_check = true
     }
+  }
+}
+
+var_root_sqlserver = {
+  sql_server_1 = {
+    name                          = "rg1k8ssqlserver"
+    resource_group_name           = "rg1k8s"
+    location                      = "francecentral"
+    version                       = "12.0"
+    minimum_tls_version           = "1.2"
+    public_network_access_enabled = true
+
+    identity = {
+      type = "SystemAssigned"
+    }
+
+    # For username and password
+    key_Vault_name                = "ankurKeyVault3"
+    key_Value_resource_group_name = "ankurbackend01"
+    key_sqlserver_username        = "SQLUsername"
+    key_sqlserver_password        = "SQLPassword"
+  }
+}
+
+var_root_sql_database = {
+  sql_database_dev = {
+    name                = "rg1k8ssqldbdev"
+    collation           = "SQL_Latin1_General_CP1_CI_AS"
+    license_type        = "LicenseIncluded"
+    max_size_gb         = 2
+    sku_name            = "S0"
+    enclave_type        = "VBS"
+    sql_server_name     = "rg1k8ssqlserver"
+    resource_group_name = "rg1k8s"
+  }
+  sql_database_qa = {
+    name                = "rg1k8ssqldbqa"
+    collation           = "SQL_Latin1_General_CP1_CI_AS"
+    license_type        = "LicenseIncluded"
+    max_size_gb         = 2
+    sku_name            = "S0"
+    enclave_type        = "VBS"
+    sql_server_name     = "rg1k8ssqlserver"
+    resource_group_name = "rg1k8s"
   }
 }
